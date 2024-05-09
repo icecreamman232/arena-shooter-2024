@@ -7,7 +7,10 @@ namespace JustGame.Script.Player
     {
         [SerializeField] private float m_moveSpeed;
         [SerializeField] private Vector2 m_direction;
+        [SerializeField] private Vector2 m_limitation;
 
+        private Vector2 m_deltaMovement;
+        
         private void Update()
         {
             UpdateInput();
@@ -45,7 +48,19 @@ namespace JustGame.Script.Player
 
         private void UpdateMovement()
         {
-            transform.Translate(m_direction *(Time.deltaTime * m_moveSpeed));
+            transform.Translate(m_direction * (Time.deltaTime* m_moveSpeed));
+
+            m_deltaMovement = transform.position;
+            if (Mathf.Abs(m_deltaMovement.x) > m_limitation.x)
+            {
+                m_deltaMovement.x = m_deltaMovement.x > 0 ? m_limitation.x : -m_limitation.x;
+                transform.position = m_deltaMovement;
+            }
+            if (Mathf.Abs(m_deltaMovement.y) > m_limitation.y)
+            {
+                m_deltaMovement.y = m_deltaMovement.y > 0 ? m_limitation.y : -m_limitation.y;
+                transform.position = m_deltaMovement;
+            }
         }
     }
 }

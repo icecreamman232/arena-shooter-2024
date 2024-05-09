@@ -173,3 +173,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_moveSpeed: 6
   m_direction: {x: 0, y: 0}
+  m_limitation: {x: 7, y: 3.7}
