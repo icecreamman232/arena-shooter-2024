@@ -51,6 +51,13 @@ namespace JustGame.Script.Player
             }
         }
 
+        public void Stop()
+        {
+            m_direction = Vector2.zero;
+            m_rigidbody2D.velocity = Vector2.zero;
+            m_rigidbody2D.angularVelocity = 0;
+        }
+        
         private void UpdateMovement()
         {
             m_rigidbody2D.MovePosition((Vector2)transform.position + m_direction * (Time.deltaTime* m_moveSpeed));
