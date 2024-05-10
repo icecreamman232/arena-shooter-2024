@@ -6,11 +6,11 @@ namespace JustGame.Script.CharacterScript
 {
     public class Health : MonoBehaviour
     {
-        [SerializeField] private int m_maxHealth;
-        [SerializeField] private int m_curHealth;
-        [SerializeField] private float m_invulnerableDuration;
+        [SerializeField] protected int m_maxHealth;
+        [SerializeField] protected int m_curHealth;
+        [SerializeField] protected float m_invulnerableDuration;
 
-        private bool m_isInvulnerable;
+        protected bool m_isInvulnerable;
 
         private void Start()
         {
@@ -48,6 +48,7 @@ namespace JustGame.Script.CharacterScript
 
         protected virtual void Kill()
         {
+            m_isInvulnerable = true;
             Destroy(this.gameObject);
         }
     }
