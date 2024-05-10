@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 8662044498250020766}
   - component: {fileID: 6159740554550569207}
   - component: {fileID: 8231299360650475774}
+  - component: {fileID: 5265970115858538328}
   m_Layer: 0
   m_Name: PlayerMeleeProjectile
   m_TagString: Untagged
@@ -179,8 +180,25 @@ MonoBehaviour:
   m_maxRange: 2
   m_moveSpeed: 25
   m_direction: {x: 0, y: 0}
-  m_destroyWhenCollide: 1
+  m_destroyWhenCollide: 0
   m_layerMask:
     serializedVersion: 2
     m_Bits: 128
   m_rotationPivot: {fileID: 4379790631055186929}
+--- !u!114 &5265970115858538328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8777976341289023458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 674c1108ec1f9d24aacffe5dce0bedb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_minDamage: 5
+  m_maxDamage: 3
+  m_targetMask:
+    serializedVersion: 2
+    m_Bits: 128

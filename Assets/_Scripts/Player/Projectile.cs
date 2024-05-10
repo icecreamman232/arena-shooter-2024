@@ -1,3 +1,4 @@
+using System;
 using JustGame.Script.Manager;
 using UnityEngine;
 
@@ -16,13 +17,19 @@ namespace JustGame.Script.Weapon
         [Header("Collision")] 
         [SerializeField] private bool m_destroyWhenCollide;
         [SerializeField] private LayerMask m_layerMask;
-
         [SerializeField] private Transform m_rotationPivot;
-        
+
+
+        private DamageHandler m_damageHandler;
         private Vector2 m_startPos;
         private float m_traveledDist;
-        
-        
+
+        private void Start()
+        {
+            m_damageHandler = GetComponent<DamageHandler>();
+            m_damageHandler.OnHit += DestroyProjectile;
+        }
+
         public virtual void Spawn(Vector2 position, Vector2 direction, Quaternion rotation)
         {
             m_startPos = position;
@@ -62,6 +69,12 @@ namespace JustGame.Script.Weapon
         {
             gameObject.SetActive(false);
             transform.rotation = Quaternion.identity;
+        }
+
+        private void OnDestroy()
+        {
+            if (m_damageHandler == null) return;
+            m_damageHandler.OnHit -= DestroyProjectile;
         }
     }
 }
