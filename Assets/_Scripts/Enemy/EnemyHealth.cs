@@ -13,6 +13,14 @@ namespace JustGame.Script.CharacterScript
         [SerializeField] private MMF_Player m_deathFeedback;
         [SerializeField] private AnimationParameter m_deathAnim;
         [SerializeField] private EnemyHealthBar m_healthBar;
+        protected EnemyMovement m_movement;
+        protected EnemyController m_controller;
+        protected override void Start()
+        {
+            base.Start();
+            m_movement = GetComponent<EnemyMovement>();
+            m_controller = GetComponent<EnemyController>();
+        }
 
         protected override void UpdateHealthBar()
         {
@@ -31,6 +39,9 @@ namespace JustGame.Script.CharacterScript
             {
                 yield break;
             }
+            m_movement.Stop();
+            m_controller.StopBrain();
+            
             m_isInvulnerable = true;
             m_deathAnim.SetTrigger();
             m_deathFeedback.PlayFeedbacks();

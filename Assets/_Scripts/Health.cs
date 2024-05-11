@@ -12,6 +12,8 @@ namespace JustGame.Script.CharacterScript
 
         protected bool m_isInvulnerable;
 
+        public Action OnDeath;
+
         protected virtual void Start()
         {
             m_curHealth = m_maxHealth;
@@ -55,6 +57,7 @@ namespace JustGame.Script.CharacterScript
 
         protected virtual void Kill()
         {
+            OnDeath?.Invoke();
             m_isInvulnerable = true;
             Destroy(this.gameObject);
         }
