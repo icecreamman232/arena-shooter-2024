@@ -12,7 +12,7 @@ namespace JustGame.Script.CharacterScript
 
         protected bool m_isInvulnerable;
 
-        private void Start()
+        protected virtual void Start()
         {
             m_curHealth = m_maxHealth;
         }
@@ -25,6 +25,8 @@ namespace JustGame.Script.CharacterScript
             
             m_curHealth -= damage;
 
+            UpdateHealthBar();
+            
             if (m_curHealth <= 0)
             {
                 Kill();
@@ -34,6 +36,11 @@ namespace JustGame.Script.CharacterScript
             StartCoroutine(OnInvulnerable());
         }
 
+        protected virtual void UpdateHealthBar()
+        {
+            
+        }
+        
         protected virtual IEnumerator OnInvulnerable()
         {
             if (m_isInvulnerable)

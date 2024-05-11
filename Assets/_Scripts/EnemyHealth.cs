@@ -1,6 +1,8 @@
 
 using System.Collections;
+using JustGame.Script.UI;
 using JustGame.Scripts.Common;
+using JustGame.Scripts.Managers;
 using MoreMountains.Feedbacks;
 using UnityEngine;
 
@@ -10,6 +12,13 @@ namespace JustGame.Script.CharacterScript
     {
         [SerializeField] private MMF_Player m_deathFeedback;
         [SerializeField] private AnimationParameter m_deathAnim;
+        [SerializeField] private EnemyHealthBar m_healthBar;
+
+        protected override void UpdateHealthBar()
+        {
+            m_healthBar.UpdateHealthBar(MathHelpers.Remap(m_curHealth, 0, m_maxHealth, 0, 1));
+            base.UpdateHealthBar();
+        }
 
         protected override void Kill()
         {
