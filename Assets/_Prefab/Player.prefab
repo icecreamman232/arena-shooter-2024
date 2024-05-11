@@ -424,6 +424,7 @@ MonoBehaviour:
   m_curHealth: 0
   m_invulnerableDuration: 0.5
   m_hitFeedback: {fileID: 1655939842653835956}
+  m_playerHealthBarEvent: {fileID: 11400000, guid: 4296251cf2e9c4a438ebcab9340caef3, type: 2}
 --- !u!1001 &7189463547031909802
 PrefabInstance:
   m_ObjectHideFlags: 0
