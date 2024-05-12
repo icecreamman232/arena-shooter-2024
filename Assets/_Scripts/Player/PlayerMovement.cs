@@ -14,7 +14,7 @@ namespace JustGame.Script.Player
             UpdateInput();
         }
 
-        private void FixedUpdate()
+        private void LateUpdate()
         {
             UpdateMovement();
         }

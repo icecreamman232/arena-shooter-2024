@@ -23,12 +23,7 @@ public class DamageHandler : MonoBehaviour
         if (!LayerManager.IsInLayerMask(other.gameObject.layer, m_targetMask)) return;
         CauseDamage(other.gameObject);
     }
-
-    // protected void OnCollisionEnter2D(Collision2D other)
-    // {
-    //     if (!LayerManager.IsInLayerMask(other.gameObject.layer, m_targetMask)) return;
-    //     CauseDamage(other.gameObject);
-    // }
+    
 
     protected virtual void CauseDamage(GameObject target)
     {

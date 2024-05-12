@@ -683,7 +683,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a963dc53e986b9d409831e91b169bdbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_moveSpeed: 2
+  m_moveSpeed: 4
   m_direction: {x: 0, y: 0}
   m_rigidbody2D: {fileID: 8401524225097997790}
   m_obstacleMask:

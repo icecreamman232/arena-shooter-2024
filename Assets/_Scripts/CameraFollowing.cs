@@ -14,6 +14,7 @@ namespace JustGame.Scripts.Managers
         private void Awake()
         {
             m_canFollow = true;
+            Application.targetFrameRate = 60;
         }
 
         public void SetPermission(bool value)
@@ -35,9 +36,7 @@ namespace JustGame.Scripts.Managers
             if (m_targetTransform == null) return;
             m_targetPos = m_targetTransform.position;
             m_targetPos.z = -10;
-            m_cameraTransform.position = Vector3.Lerp(m_cameraTransform.position, m_targetPos, Time.deltaTime * m_followingSpeed / 10);
-            
-            
+            m_cameraTransform.position = Vector3.Lerp(m_cameraTransform.position, m_targetPos, Time.fixedDeltaTime * m_followingSpeed/10f);
         }
 
         public void ResetCamera()

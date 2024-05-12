@@ -441,7 +441,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_cameraTransform: {fileID: 519420032}
   m_targetTransform: {fileID: 1067629432}
-  m_followingSpeed: 100
+  m_followingSpeed: 50
 --- !u!1 &599829745
 GameObject:
   m_ObjectHideFlags: 0

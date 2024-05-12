@@ -181,6 +181,7 @@ MonoBehaviour:
   m_moveSpeed: 25
   m_direction: {x: 0, y: 0}
   m_destroyWhenCollide: 0
+  m_targetTags: []
   m_layerMask:
     serializedVersion: 2
     m_Bits: 1
@@ -199,7 +200,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_minDamage: 5
   m_maxDamage: 3
-  m_knockbackForce: {x: 0, y: 0}
+  m_knockbackForce: {x: 500, y: 500}
   m_targetMask:
     serializedVersion: 2
     m_Bits: 128
