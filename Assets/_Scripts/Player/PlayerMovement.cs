@@ -8,7 +8,7 @@ namespace JustGame.Script.Player
         [SerializeField] private float m_moveSpeed;
         [SerializeField] private Vector2 m_direction;
         [SerializeField] private Rigidbody2D m_rigidbody2D;
-        
+
         private void Update()
         {
             UpdateInput();
@@ -57,7 +57,7 @@ namespace JustGame.Script.Player
         
         private void UpdateMovement()
         {
-            m_rigidbody2D.MovePosition((Vector2)transform.position + m_direction * (Time.deltaTime* m_moveSpeed));
+            m_rigidbody2D.MovePosition((Vector2)transform.position + m_direction * (Time.fixedDeltaTime * m_moveSpeed));
         }
     }
 }

@@ -39,6 +39,6 @@ public class EnemyMovement : MonoBehaviour
     
     private void UpdateMovement()
     {
-        m_rigidbody2D.MovePosition((Vector2)transform.position + m_direction * (Time.deltaTime* m_moveSpeed));
+        m_rigidbody2D.MovePosition((Vector2)transform.position + m_direction * (Time.fixedDeltaTime * m_moveSpeed));
     }
 }

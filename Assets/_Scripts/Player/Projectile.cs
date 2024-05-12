@@ -16,6 +16,7 @@ namespace JustGame.Script.Weapon
 
         [Header("Collision")] 
         [SerializeField] private bool m_destroyWhenCollide;
+        [SerializeField] private string[] m_targetTags;
         [SerializeField] private LayerMask m_layerMask;
         [SerializeField] private Transform m_rotationPivot;
 
@@ -42,7 +43,7 @@ namespace JustGame.Script.Weapon
         protected virtual void OnTriggerEnter2D(Collider2D other)
         {
             if (!m_destroyWhenCollide) return;
-            if (!LayerManager.IsInLayerMask(other.gameObject.layer, m_layerMask)) return;
+            if (LayerManager.IsInLayerMask(other.gameObject.layer, m_layerMask)) return;
             
             DestroyProjectile();
         }

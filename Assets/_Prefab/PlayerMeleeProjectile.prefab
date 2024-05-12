@@ -183,7 +183,7 @@ MonoBehaviour:
   m_destroyWhenCollide: 0
   m_layerMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 1
   m_rotationPivot: {fileID: 4379790631055186929}
 --- !u!114 &5265970115858538328
 MonoBehaviour:
@@ -199,6 +199,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_minDamage: 5
   m_maxDamage: 3
+  m_knockbackForce: {x: 0, y: 0}
   m_targetMask:
     serializedVersion: 2
     m_Bits: 128
