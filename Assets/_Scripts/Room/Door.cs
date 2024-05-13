@@ -21,6 +21,7 @@ namespace JustGame.Script.Level
         
         private void Start()
         {
+ 
             if (m_isUnlocked)
             {
                 Unlock();
@@ -75,9 +76,19 @@ namespace JustGame.Script.Level
         private void OnDrawGizmos()
         {
             if (m_connectDoor == null) return;
-            
+            var arrowSize = 0.3f;
             Gizmos.color = Color.green;
+            Vector3 direction = (m_connectDoor.transform.position - transform.position).normalized;
+            
             Gizmos.DrawLine(transform.position,m_connectDoor.transform.position);
+            
+            Quaternion rightRotation = Quaternion.Euler(0f, 0, 135f);
+            Quaternion leftRotation = Quaternion.Euler(0f, 0, -135f);
+            Vector3 rightArrowTip = m_connectDoor.transform.position - direction * arrowSize + (rightRotation * direction) * arrowSize;
+            Vector3 leftArrowTip = m_connectDoor.transform.position - direction * arrowSize + (leftRotation * direction) * arrowSize;
+
+            Gizmos.DrawLine(m_connectDoor.transform.position, rightArrowTip);
+            Gizmos.DrawLine(m_connectDoor.transform.position, leftArrowTip);
         }
     }
 }

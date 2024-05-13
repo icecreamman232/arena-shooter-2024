@@ -47,3 +47,6 @@ TagManager:
   - name: Enemy
     uniqueID: 3128192321
     locked: 0
+  - name: Mask
+    uniqueID: 14236155
+    locked: 0
