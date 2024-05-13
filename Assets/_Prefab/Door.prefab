@@ -93,6 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8fb3e677e54ffd4bb62dd371f03b4c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_teleportEvent: {fileID: 11400000, guid: 2fa178228fcc8884b9948f715b52a1a3, type: 2}
   m_unlockState: {fileID: 6021649343824369975}
   m_lockState: {fileID: 4997394005277453316}
   m_isUnlocked: 0

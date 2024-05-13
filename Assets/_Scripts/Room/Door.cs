@@ -8,6 +8,7 @@ namespace JustGame.Script.Level
 {
     public class Door : MonoBehaviour
     {
+        [SerializeField] private TeleportEvent m_teleportEvent;
         [SerializeField] private GameObject m_unlockState;
         [SerializeField] private GameObject m_lockState;
         [SerializeField] private bool m_isUnlocked;
@@ -16,12 +17,14 @@ namespace JustGame.Script.Level
         [SerializeField] private UnityEvent m_eventToTrigger;
 
         private bool m_isTeleporting;
-
+        private Room m_room;
+        
         public Vector2 SpawnPos => m_spawnPivot.position;
+        public Room Room => m_room;
         
         private void Start()
         {
- 
+            m_room = GetComponentInParent<Room>();
             if (m_isUnlocked)
             {
                 Unlock();
@@ -40,7 +43,7 @@ namespace JustGame.Script.Level
 
             if (other.gameObject.layer != LayerManager.PlayerLayer) return;
 
-            StartCoroutine(TeleportRoutine(other.transform));
+            m_teleportEvent.Raise(this,m_connectDoor);
             
             m_eventToTrigger?.Invoke();
         }
@@ -54,23 +57,9 @@ namespace JustGame.Script.Level
 
         public void Lock()
         {
-            m_isUnlocked = true;
+            m_isUnlocked = false;
             m_unlockState.SetActive(false);
             m_lockState.SetActive(true);
-        }
-
-        private IEnumerator TeleportRoutine(Transform player)
-        {
-            if (m_isTeleporting)
-            {
-                yield break;
-            }
-
-            m_isTeleporting = true;
-            
-            player.position = m_connectDoor.SpawnPos;
-            
-            m_isTeleporting = false;
         }
 
         private void OnDrawGizmos()

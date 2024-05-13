@@ -1074,6 +1074,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e54f9193983ab1244aad9aaf4c0c7df4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_teleportEvent: {fileID: 11400000, guid: 2fa178228fcc8884b9948f715b52a1a3, type: 2}
+  m_player: {fileID: 1067629432}
   m_startRoom: {fileID: 1916041564}
   m_rooms:
   - {fileID: 2096966257}
