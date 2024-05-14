@@ -128,9 +128,13 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 4.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5057154079695285000, guid: d755e33eab8dd4d4ead148adae0ae105, type: 3}
+      propertyPath: m_doorType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5301070760550517179, guid: d755e33eab8dd4d4ead148adae0ae105, type: 3}
       propertyPath: m_Name
-      value: Level-1-d
+      value: Level-1-L-diagonal-flipped
       objectReference: {fileID: 0}
     - target: {fileID: 5973361301854305509, guid: d755e33eab8dd4d4ead148adae0ae105, type: 3}
       propertyPath: m_Size.x
@@ -1638,6 +1642,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4637822558908385736, guid: 2656fb94e0572094c8fe5691c56fd9a0, type: 3}
       propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8801508964134718026, guid: 2656fb94e0572094c8fe5691c56fd9a0, type: 3}
+      propertyPath: m_doorType
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

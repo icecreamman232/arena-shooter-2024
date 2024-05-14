@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using UnityEngine;
 
 namespace JustGame.Script.Level
@@ -8,7 +10,9 @@ namespace JustGame.Script.Level
         [SerializeField] private Vector2 m_roomOffset;
         [SerializeField] private SpriteMask m_mask;
         [SerializeField] private Door[] m_doorList;
-        
+
+        public Vector2 Size => m_roomSize;
+        public Door[] DoorList => m_doorList;
 
         public void Show()
         {
@@ -18,6 +22,28 @@ namespace JustGame.Script.Level
         public void Hide()
         {
             m_mask.enabled = true;
+        }
+
+        public bool HasMatchType(DoorType type)
+        {
+            Door door = null;
+            switch (type)
+            {
+                case DoorType.GO_UP:
+                    door = DoorList.FirstOrDefault(x => x.DoorType == DoorType.GO_DOWN);
+                    break;
+                case DoorType.GO_DOWN:
+                    door = DoorList.FirstOrDefault(x => x.DoorType == DoorType.GO_UP);
+                    break;
+                case DoorType.GO_LEFT:
+                    door = DoorList.FirstOrDefault(x => x.DoorType == DoorType.GO_RIGHT);
+                    break;
+                case DoorType.GO_RIGHT:
+                    door = DoorList.FirstOrDefault(x => x.DoorType == DoorType.GO_LEFT);
+                    break;
+            }
+
+            return door != null;
         }
         
         private void OnDrawGizmos()

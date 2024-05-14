@@ -78,7 +78,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5301070760550517179, guid: d755e33eab8dd4d4ead148adae0ae105, type: 3}
       propertyPath: m_Name
-      value: Level-1-a
+      value: Level-1-square-1-door
       objectReference: {fileID: 0}
     - target: {fileID: 5878609566874345867, guid: d755e33eab8dd4d4ead148adae0ae105, type: 3}
       propertyPath: m_LocalPosition.y

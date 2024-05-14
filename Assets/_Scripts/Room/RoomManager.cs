@@ -14,10 +14,15 @@ public class RoomManager : MonoBehaviour
     {
         for (int i = 0; i < m_rooms.Length; i++)
         {
+            if(m_rooms[i] == null) continue;
             m_rooms[i].Hide();
         }
+
+        if (m_startRoom != null)
+        {
+            m_startRoom.Show();
+        }
         
-        m_startRoom.Show();
         m_teleportEvent.AddListener(OnReceiveTeleportEvent);
     }
 

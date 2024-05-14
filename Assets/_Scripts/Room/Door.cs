@@ -6,8 +6,16 @@ using UnityEngine.Events;
 
 namespace JustGame.Script.Level
 {
+    public enum DoorType
+    {
+        GO_UP,
+        GO_DOWN,
+        GO_LEFT,
+        GO_RIGHT,
+    }
     public class Door : MonoBehaviour
     {
+        [SerializeField] private DoorType m_doorType;
         [SerializeField] private TeleportEvent m_teleportEvent;
         [SerializeField] private GameObject m_unlockState;
         [SerializeField] private GameObject m_lockState;
@@ -18,6 +26,20 @@ namespace JustGame.Script.Level
 
         private bool m_isTeleporting;
         private Room m_room;
+
+        public Door ConnectDoor
+        {
+            get
+            {
+                return m_connectDoor;
+            }
+            set
+            {
+                m_connectDoor = value;
+            }
+        }
+
+        public DoorType DoorType => m_doorType;
         
         public Vector2 SpawnPos => m_spawnPivot.position;
         public Room Room => m_room;
