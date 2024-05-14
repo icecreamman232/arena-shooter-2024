@@ -12,10 +12,9 @@ public class RoomManager : MonoBehaviour
     
     private void Start()
     {
-        m_startRoom.Initialize();
         for (int i = 0; i < m_rooms.Length; i++)
         {
-            m_rooms[i].Initialize();
+            m_rooms[i].Hide();
         }
         
         m_startRoom.Show();

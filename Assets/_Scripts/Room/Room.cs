@@ -9,10 +9,6 @@ namespace JustGame.Script.Level
         [SerializeField] private SpriteMask m_mask;
         [SerializeField] private Door[] m_doorList;
         
-        public void Initialize()
-        {
-            UpdateMaskSize();
-        }
 
         public void Show()
         {
@@ -23,17 +19,7 @@ namespace JustGame.Script.Level
         {
             m_mask.enabled = true;
         }
-
-        private void UpdateMaskSize()
-        {
-            Vector2 spriteSize = m_mask.sprite.bounds.size;
-            Vector2 scale = m_roomSize / spriteSize;
-
-            m_mask.enabled = true;
-            m_mask.transform.localScale = new Vector3(scale.x, scale.y, 1);
-            m_mask.transform.position += (Vector3)m_roomOffset;
-        }
-
+        
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.yellow;
