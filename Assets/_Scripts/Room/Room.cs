@@ -12,6 +12,8 @@ namespace JustGame.Script.Level
         [SerializeField] private Door[] m_doorList;
 
         public Vector2 Size => m_roomSize;
+
+        public Vector2 RoomPosition => (Vector2)transform.position + m_roomOffset;
         public Door[] DoorList => m_doorList;
 
         public void Show()

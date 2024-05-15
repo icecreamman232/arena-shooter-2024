@@ -2623,9 +2623,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee4a92cae45b1204299347e006b86744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_roomSize: {x: 20, y: 16}
+  m_roomSize: {x: 23, y: 23}
   m_roomOffset: {x: 0, y: 0}
   m_mask: {fileID: 4765819785049060888}
+  m_doorList: []
 --- !u!1 &5677180139048452283
 GameObject:
   m_ObjectHideFlags: 0

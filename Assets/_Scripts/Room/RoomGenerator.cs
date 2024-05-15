@@ -73,7 +73,9 @@ public class RoomGenerator : MonoBehaviour
             //If there's room spawned in this position (overlapped) we wont spawn this room
             if (!CanSpawn(pos, roomPrefab.Size))
             {
-                yield break;
+                roomPrefab = GetEndingRoomPrefab(curRoom.DoorList[i].DoorType);
+                Debug.Log("GET ENDING ROOM PREFAB");
+                //yield break;
             }
             
             //Create room
@@ -136,7 +138,7 @@ public class RoomGenerator : MonoBehaviour
         for (int i = 0; i < GeneratedRooms.Count; i++)
         {
             if (MathHelpers.Is2RectCollided(pos, size,
-                    GeneratedRooms[i].transform.position, GeneratedRooms[i].Size))
+                    GeneratedRooms[i].RoomPosition, GeneratedRooms[i].Size))
             {
                 return false;
             }
@@ -147,7 +149,7 @@ public class RoomGenerator : MonoBehaviour
     private Vector3 GetSpawnPosition(Room curRoom,int doorIndex, Room spawnedRoom)
     {
         var doorType = curRoom.DoorList[doorIndex].DoorType;
-        var roomPos = curRoom.transform.position;
+        var roomPos = curRoom.RoomPosition;
         var roomSize = curRoom.Size;
         
         Debug.Log($"<color=red>Inspect room {curRoom.gameObject.name}</color>");
@@ -172,39 +174,6 @@ public class RoomGenerator : MonoBehaviour
                 Debug.Log("<color=yellow>Change pos x right</color>");
                 break;
         }
-
-        // var index = 0;
-        // while (index < GeneratedRooms.Count)
-        // {
-        //     var posRoom = GeneratedRooms[index].transform.position;
-        //     var sizeRoom = GeneratedRooms[index].Size;
-        //     var isCollide = MathHelpers.Is2RectCollided(posRoom, sizeRoom, pos, spawnedRoom.Size);
-        //     if (isCollide)
-        //     {
-        //         switch (doorType)
-        //         {
-        //             case DoorType.GO_UP:
-        //                 pos.y += (3 + roomSize.y);
-        //                 break;
-        //             case DoorType.GO_DOWN:
-        //                 pos.y -= (3 + roomSize.y);
-        //                 break;
-        //             case DoorType.GO_LEFT:
-        //                 pos.x -= (3 + roomSize.x);
-        //                 break;
-        //             case DoorType.GO_RIGHT:
-        //                 pos.x += (3 + roomSize.x);
-        //                 break;
-        //         }
-        //
-        //         index = 0;
-        //     }
-        //     else
-        //     {
-        //         index++;
-        //     }
-        // }
-        
         
         return pos;
     }
@@ -219,5 +188,27 @@ public class RoomGenerator : MonoBehaviour
         var allRoom = Array.FindAll(RoomList, x => x.HasMatchType(doorType));
         
         return allRoom[Random.Range(0,allRoom.Length)];
+    }
+
+    private Room GetEndingRoomPrefab(DoorType doorType)
+    {
+        if (EndRoomDown.HasMatchType(doorType))
+        {
+            return EndRoomDown;
+        }
+        if (EndRoomUp.HasMatchType(doorType))
+        {
+            return EndRoomUp;
+        }
+        if (EndRoomLeft.HasMatchType(doorType))
+        {
+            return EndRoomLeft;
+        }
+        if (EndRoomRight.HasMatchType(doorType))
+        {
+            return EndRoomRight;
+        }
+
+        return null;
     }
 }

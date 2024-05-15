@@ -61,10 +61,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1012518073653826067, guid: d755e33eab8dd4d4ead148adae0ae105, type: 3}
-      propertyPath: m_roomSize.x
-      value: 21
-      objectReference: {fileID: 0}
-    - target: {fileID: 1012518073653826067, guid: d755e33eab8dd4d4ead148adae0ae105, type: 3}
       propertyPath: m_roomOffset.x
       value: 0.5
       objectReference: {fileID: 0}
