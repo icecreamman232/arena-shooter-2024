@@ -817,9 +817,11 @@ MonoBehaviour:
   - {fileID: 6036747226783094826, guid: 542b1759327069d408861a66653ad0dd, type: 3}
   - {fileID: 3171640726386024093, guid: 179f99b62f571034f86a230b31fde8e1, type: 3}
   IsGenerating: 0
+  OffsetRoomPos: 5
   MaxLength: 5
   MaxNormalRoom: 8
-  CurrentNormalCounter: 0
+  CurrentNormalCounter: 3
+  GeneratedRooms: []
 --- !u!1 &1316764464
 GameObject:
   m_ObjectHideFlags: 0

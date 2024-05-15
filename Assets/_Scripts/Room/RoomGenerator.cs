@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using JustGame.Script.Level;
+using JustGame.Scripts.Managers;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -18,13 +20,23 @@ public class RoomGenerator : MonoBehaviour
 
     public bool IsGenerating;
 
-    public int MaxLength = 5;
+    public int OffsetRoomPos;
     public int MaxNormalRoom = 15;
     public int CurrentNormalCounter = 0;
+
+    public List<Room> GeneratedRooms;
     
     [ContextMenu("Generate")]
     private void Generate()
     {
+        if (GeneratedRooms == null)
+        {
+            GeneratedRooms = new List<Room>();
+        }
+        else
+        {
+            GeneratedRooms.Clear();
+        }
         StartCoroutine(GenerateRoutine());
     }
 
@@ -54,11 +66,23 @@ public class RoomGenerator : MonoBehaviour
             {
                 break;
             }
+
+            var roomPrefab = GenerateRoomPrefab(curRoom.DoorList[i].DoorType);
+            var pos = GetSpawnPosition(curRoom, i, roomPrefab);
             
-            var pos = curRoom.transform.position + GetSpawnPosition(curRoom.DoorList[i].DoorType,curRoom.Size);
-            var room = Instantiate(GenerateNextRoom(curRoom.DoorList[i].DoorType),pos,Quaternion.identity);
+            //If there's room spawned in this position (overlapped) we wont spawn this room
+            if (!CanSpawn(pos, roomPrefab.Size))
+            {
+                yield break;
+            }
+            
+            //Create room
+            var room = Instantiate(roomPrefab,Vector2.zero,Quaternion.identity);
+            room.transform.position = pos;
+            GeneratedRooms.Add(room);
+            
+            //Find door to connect
             Door door = null;
-            
             for (int j = 0; j < room.DoorList.Length; j++)
             {
                 switch (curRoom.DoorList[i].DoorType)
@@ -93,45 +117,107 @@ public class RoomGenerator : MonoBehaviour
                         break;
                 }
             }
-
             
             //Connect 2 doors
             curRoom.DoorList[i].ConnectDoor = door;
             door.ConnectDoor = curRoom.DoorList[i];
             
             Debug.Log($"Spawn room {CurrentNormalCounter.ToString()} connect to room {curRoom.gameObject.name}");
+            Debug.Log("===========================");
+            room.gameObject.name = $"Room {CurrentNormalCounter.ToString()}";
             CurrentNormalCounter++;
             
             StartCoroutine(GenerateRoom(room));
         }
     }
 
-    private Vector3 GetSpawnPosition(DoorType type, Vector2 roomSize)
+    private bool CanSpawn(Vector2 pos, Vector2 size)
     {
-        Vector3 pos = Vector3.zero;
-        switch (type)
+        for (int i = 0; i < GeneratedRooms.Count; i++)
+        {
+            if (MathHelpers.Is2RectCollided(pos, size,
+                    GeneratedRooms[i].transform.position, GeneratedRooms[i].Size))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private Vector3 GetSpawnPosition(Room curRoom,int doorIndex, Room spawnedRoom)
+    {
+        var doorType = curRoom.DoorList[doorIndex].DoorType;
+        var roomPos = curRoom.transform.position;
+        var roomSize = curRoom.Size;
+        
+        Debug.Log($"<color=red>Inspect room {curRoom.gameObject.name}</color>");
+        
+        Vector3 pos = roomPos;
+        switch (doorType)
         {
             case DoorType.GO_UP:
-                pos.y += roomSize.y;
+                pos.y += (OffsetRoomPos + roomSize.y);
+                Debug.Log("<color=yellow>Change pos y up</color>");
                 break;
             case DoorType.GO_DOWN:
-                pos.y -= roomSize.y;
+                pos.y -= (OffsetRoomPos + roomSize.y);
+                Debug.Log("<color=yellow>Change pos y down</color>");
                 break;
             case DoorType.GO_LEFT:
-                pos.x -= roomSize.x;
+                pos.x -= (OffsetRoomPos + roomSize.x);
+                Debug.Log("<color=yellow>Change pos x left</color>");
                 break;
             case DoorType.GO_RIGHT:
-                pos.x += roomSize.x;
+                pos.x += (OffsetRoomPos + roomSize.x);
+                Debug.Log("<color=yellow>Change pos x right</color>");
                 break;
         }
 
+        // var index = 0;
+        // while (index < GeneratedRooms.Count)
+        // {
+        //     var posRoom = GeneratedRooms[index].transform.position;
+        //     var sizeRoom = GeneratedRooms[index].Size;
+        //     var isCollide = MathHelpers.Is2RectCollided(posRoom, sizeRoom, pos, spawnedRoom.Size);
+        //     if (isCollide)
+        //     {
+        //         switch (doorType)
+        //         {
+        //             case DoorType.GO_UP:
+        //                 pos.y += (3 + roomSize.y);
+        //                 break;
+        //             case DoorType.GO_DOWN:
+        //                 pos.y -= (3 + roomSize.y);
+        //                 break;
+        //             case DoorType.GO_LEFT:
+        //                 pos.x -= (3 + roomSize.x);
+        //                 break;
+        //             case DoorType.GO_RIGHT:
+        //                 pos.x += (3 + roomSize.x);
+        //                 break;
+        //         }
+        //
+        //         index = 0;
+        //     }
+        //     else
+        //     {
+        //         index++;
+        //     }
+        // }
+        
+        
         return pos;
     }
 
-    private Room GenerateNextRoom(DoorType doorType)
+    /// <summary>
+    /// Find random room that has matched door to connect to
+    /// </summary>
+    /// <param name="doorType"></param>
+    /// <returns></returns>
+    private Room GenerateRoomPrefab(DoorType doorType)
     {
-        var room = Array.FindAll(RoomList, x => x.HasMatchType(doorType));
-
-        return room[Random.Range(0,room.Length)];
+        var allRoom = Array.FindAll(RoomList, x => x.HasMatchType(doorType));
+        
+        return allRoom[Random.Range(0,allRoom.Length)];
     }
 }

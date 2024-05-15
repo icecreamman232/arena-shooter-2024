@@ -10,6 +10,40 @@ namespace JustGame.Scripts.Managers
         }
 
         /// <summary>
+        /// Check whether 2 rect collide with each other. Each rect has its position as its center not top-right
+        /// </summary>
+        /// <param name="rect1Pos"></param>
+        /// <param name="rect1Size"></param>
+        /// <param name="rect2Pos"></param>
+        /// <param name="rect2Size"></param>
+        /// <returns></returns>
+        public static bool Is2RectCollided(Vector2 rect1Pos, Vector2 rect1Size, Vector2 rect2Pos, Vector2 rect2Size)
+        {
+            // Calculate the minimum and maximum coordinates of each rectangle
+            float rect1MinX = rect1Pos.x;
+            float rect1MaxX = rect1Pos.x + rect1Size.x;
+            float rect1MinY = rect1Pos.y;
+            float rect1MaxY = rect1Pos.y + rect1Size.y;
+
+            float rect2MinX = rect2Pos.x;
+            float rect2MaxX = rect2Pos.x + rect2Size.x;
+            float rect2MinY = rect2Pos.y;
+            float rect2MaxY = rect2Pos.y + rect2Size.y;
+
+            // Check for overlap in the X-axis
+            bool isOverlapX = rect1MinX <= rect2MaxX && rect1MaxX >= rect2MinX;
+
+            // Check for overlap in the Y-axis
+            bool isOverlapY = rect1MinY <= rect2MaxY && rect1MaxY >= rect2MinY;
+
+            // If there is overlap in both X and Y axes, a collision has occurred
+            bool isCollision = isOverlapX && isOverlapY;
+
+            return isCollision;
+        }
+        
+
+        /// <summary>
         /// Remaps a value x in interval [A,B], to the proportional value in interval [C,D]
         /// </summary>
         /// <param name="x">The value to remap.</param>
