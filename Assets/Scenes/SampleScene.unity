@@ -810,6 +810,17 @@ MonoBehaviour:
   EndRoomDown: {fileID: 1012518073653826067, guid: d6d0738d41234974e9f23037ba6989de, type: 3}
   EndRoomLeft: {fileID: 1012518073653826067, guid: 50fb4bbd98015a844b087dbdb5c558ee, type: 3}
   EndRoomRight: {fileID: 1012518073653826067, guid: c91ccced3735d2b41b06c24d7b6aa102, type: 3}
+  m_topLeftCornerRoom: {fileID: 6036747226783094826, guid: 542b1759327069d408861a66653ad0dd, type: 3}
+  m_topRightCornerRoom: {fileID: 4396264610283047968, guid: 97895e22f47fe7b4193edb4a414b34fe, type: 3}
+  m_botLeftCornerRoom: {fileID: 7446199355952713645, guid: 0cc3fab3538695d45bbd9cdbaf3fcb81, type: 3}
+  m_botRightCornerRoom: {fileID: 6117828990758437836, guid: dcfb1769aac922b498f2b13161bedb9d, type: 3}
+  m_topBotRoom: {fileID: 3108404007749112928, guid: 81950a8466790c840a698136c8558a22, type: 3}
+  m_leftRightRoom: {fileID: 1724946048236266871, guid: fd1c52d68b610d84684d8cb2695b9db1, type: 3}
+  m_plusRoom: {fileID: 3171640726386024093, guid: 179f99b62f571034f86a230b31fde8e1, type: 3}
+  m_T_Up_Room: {fileID: 8160309011505394320, guid: 20f590d1c22fd9741ab4c711ef0ad6c7, type: 3}
+  m_T_Down_Room: {fileID: 4558380825510339380, guid: b7b5c0e88eebcef4cba3b27035ae8a55, type: 3}
+  m_T_Left_Room: {fileID: 8799695859131363707, guid: 63964a02bcba94446a8b4e0d8b698827, type: 3}
+  m_T_Right_Room: {fileID: 7244987704790378354, guid: 4f4f01f48878ff24ea5d7a3b828d06a2, type: 3}
   RoomList:
   - {fileID: 4396264610283047968, guid: 97895e22f47fe7b4193edb4a414b34fe, type: 3}
   - {fileID: 6117828990758437836, guid: dcfb1769aac922b498f2b13161bedb9d, type: 3}
@@ -818,10 +829,10 @@ MonoBehaviour:
   - {fileID: 3171640726386024093, guid: 179f99b62f571034f86a230b31fde8e1, type: 3}
   IsGenerating: 0
   OffsetRoomPos: 5
-  MaxLength: 5
-  MaxNormalRoom: 8
+  MaxNormalRoom: 5
   CurrentNormalCounter: 3
   GeneratedRooms: []
+  GenerateRoomType: 
 --- !u!1 &1316764464
 GameObject:
   m_ObjectHideFlags: 0

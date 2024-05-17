@@ -112,5 +112,11 @@ namespace JustGame.Scripts.Managers
         {
             return (x / 100f * percent);
         }
+
+        public static T ChooseRandomValueFrom<T>(params T[] options)
+        {
+            int randomIndex = Random.Range(0, options.Length);
+            return options[randomIndex];
+        }
     }
 }
