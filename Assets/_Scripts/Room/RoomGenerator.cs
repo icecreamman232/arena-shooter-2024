@@ -1,13 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using JustGame.Script.Level;
 using JustGame.Scripts.Managers;
 using Unity.Mathematics;
 using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
-using Random = UnityEngine.Random;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 
@@ -107,7 +105,8 @@ public class RoomGenerator : MonoBehaviour
         int y = 0;
         worldArr[x, y] = 1;
         m_roomCoordList.Add((2,0));
-
+        m_roomCoordList.Add((2,1));
+        
         // //============================FORCE VALUES
         // m_roomCoordList.Add((2,1));
         // m_roomCoordList.Add((1,1));
@@ -117,19 +116,37 @@ public class RoomGenerator : MonoBehaviour
         //
         //
         // return;
-        
-        
-        
-        
-        
-        
+        //
+        //
+        //
+        //
         
         int direction = -1;
-        int counter = 0;
+        int counter = 1;
         int breakCounter = 0;
+        int lastDirection = 1;
+        
         while (counter < MaxNormalRoom || breakCounter < 4)
         {
-            direction =  MathHelpers.ChooseRandomValueFrom(0, 1, 2, 3);
+            if (lastDirection == 1)
+            {
+                direction =  MathHelpers.ChooseRandomValueFrom(0, 2, 3);
+            }
+            else if (lastDirection == 0)
+            {
+                direction =  MathHelpers.ChooseRandomValueFrom(1, 2, 3);
+            }
+            else if (lastDirection == 2)
+            {
+                direction =  MathHelpers.ChooseRandomValueFrom(0, 1, 3);
+            }
+            else if (lastDirection == 3)
+            {
+                direction =  MathHelpers.ChooseRandomValueFrom(0, 1, 2);
+            }
+
+            lastDirection = direction;
+            
             switch (direction)
             {
                 //left
@@ -233,6 +250,7 @@ public class RoomGenerator : MonoBehaviour
         //Create start room
         var startRoom = Instantiate(StartRoom, Vector3.zero, quaternion.identity);
         GeneratedRooms.Add(startRoom);
+        GenerateRoomType.Add(RoomType.Top);
         yield return new WaitForSecondsRealtime(1.0f);
 
         CreateRoom();
@@ -243,6 +261,7 @@ public class RoomGenerator : MonoBehaviour
 
     private void CreateRoom()
     {
+        bool hasStartingRoomAsNeighbor = false;
         //Run from 1 to exclude starting room
         for (int i = 1; i < m_roomCoordList.Count; i++)
         {
@@ -254,100 +273,118 @@ public class RoomGenerator : MonoBehaviour
             var right = x + 1;
             
             //T up
-            if (HasRoomAtCoord((x,top)) 
-                && HasRoomAtCoord((left,y))
-                && HasRoomAtCoord((right,y)))
+            if (HasRoomAtCoord((x,top),(x,y)) 
+                && HasRoomAtCoord((left,y),(x,y))
+                && HasRoomAtCoord((right,y),(x,y)))
             {
                 var tUpRoom = Instantiate(m_T_Up_Room, GetPosFromCoord(x, y), Quaternion.identity);
                 GeneratedRooms.Add(tUpRoom);
                 Debug.Log($"Create T_UP at i{x} j{y}");
             }
             //T down
-            else if ( HasRoomAtCoord((x,bot))
-                     && HasRoomAtCoord((left,y))
-                     && HasRoomAtCoord((right,y)))
+            else if ( HasRoomAtCoord((x,bot),(x,y))
+                     && HasRoomAtCoord((left,y),(x,y))
+                     && HasRoomAtCoord((right,y),(x,y)))
             {
                 var tDownRoom = Instantiate(m_T_Down_Room, GetPosFromCoord(x, y), Quaternion.identity);
                 GeneratedRooms.Add(tDownRoom);
                 Debug.Log($"Create T_DOWN at i{x} j{y}");
             }
             //T right
-            else if (HasRoomAtCoord((right,y))
-                     && HasRoomAtCoord((x,top))
-                     && HasRoomAtCoord((x,bot)))
+            else if (HasRoomAtCoord((right,y),(x,y))
+                     && HasRoomAtCoord((x,top),(x,y))
+                     && HasRoomAtCoord((x,bot),(x,y)))
             {
                 var tRightRoom = Instantiate(m_T_Right_Room, GetPosFromCoord(x, y), Quaternion.identity);
                 GeneratedRooms.Add(tRightRoom);
                 Debug.Log($"Create T_RIGHT at i{x} j{y}");
             }
             //T left
-            else if (HasRoomAtCoord((left,y))
-                     && HasRoomAtCoord((x,top))
-                     && HasRoomAtCoord((x,bot)))
+            else if (HasRoomAtCoord((left,y),(x,y))
+                     && HasRoomAtCoord((x,top),(x,y))
+                     && HasRoomAtCoord((x,bot),(x,y)))
             {
                 var tLeftRoom = Instantiate(m_T_Left_Room, GetPosFromCoord(x, y), Quaternion.identity);
                 GeneratedRooms.Add(tLeftRoom);
                 Debug.Log($"Create T_RIGHT at i{x} j{y}");
             }
             //Top Bot
-            else if (HasRoomAtCoord((x,top))
-                     && HasRoomAtCoord((x,bot)))
+            else if (HasRoomAtCoord((x,top),(x,y))
+                     && HasRoomAtCoord((x,bot),(x,y)))
             {
                 var topBotRoom = Instantiate(m_topBotRoom, GetPosFromCoord(x, y), Quaternion.identity);
                 GeneratedRooms.Add(topBotRoom);
                 Debug.Log($"Create TOP_BOT at i{x} j{y}");
             }
             //Left Right
-            else if (HasRoomAtCoord((left,y))
-                     && HasRoomAtCoord((right,y)))
+            else if (HasRoomAtCoord((left,y),(x,y))
+                     && HasRoomAtCoord((right,y),(x,y)))
             {
                 var leftRightRoom = Instantiate(m_leftRightRoom, GetPosFromCoord(x, y), Quaternion.identity);
                 GeneratedRooms.Add(leftRightRoom);
                 Debug.Log($"Create LEFT_RIGHT at i{x} j{y}");
             }
             //Check if this is top left corner
-            else if (HasRoomAtCoord((right,y))
-                     && HasRoomAtCoord((x,bot)))
+            else if (HasRoomAtCoord((right,y),(x,y))
+                     && HasRoomAtCoord((x,bot),(x,y))
+                     && !IsStartRoom((left,y)))
             {
                 var topLeftRoom = Instantiate(m_topLeftCornerRoom, GetPosFromCoord(x, y), Quaternion.identity);
                 GeneratedRooms.Add(topLeftRoom);
                 Debug.Log($"Create TOP_LEFT corner at i{x} j{y}");
             }
             //Check if is top right corner
-            else if (HasRoomAtCoord((left,y))
-                     && HasRoomAtCoord((x,bot)))
+            else if (HasRoomAtCoord((left,y),(x,y))
+                     && HasRoomAtCoord((x,bot),(x,y))
+                     && !IsStartRoom((right,y)))
             {
                 var topRightRoom = Instantiate(m_topRightCornerRoom, GetPosFromCoord(x, y), Quaternion.identity);
                 GeneratedRooms.Add(topRightRoom);
                 Debug.Log($"Create TOP_RIGHT corner at i{x} j{y}");
             }
-            //Bot Right corner
-            else if (HasRoomAtCoord((right,y))
-                     && HasRoomAtCoord((x,top)))
+            //Bot left corner
+            else if (HasRoomAtCoord((right,y),(x,y))
+                     && HasRoomAtCoord((x,top),(x,y))
+                     && !IsStartRoom((left,y)))
             {
                 var botLeftRoom = Instantiate(m_botLeftCornerRoom, GetPosFromCoord(x, y), Quaternion.identity);
                 GeneratedRooms.Add(botLeftRoom);
                 Debug.Log($"Create BOT_LEFT corner at i{x} j{y}");
             }
             //Bot Right corner
-            else if (HasRoomAtCoord((left,y))
-                     && HasRoomAtCoord((x,top)))
+            else if (HasRoomAtCoord((left,y),(x,y))
+                     && HasRoomAtCoord((x,top),(x,y))
+                     && !IsStartRoom((left,y)))
             {
                 var botRightRoom = Instantiate(m_botRightCornerRoom, GetPosFromCoord(x, y), Quaternion.identity);
                 GeneratedRooms.Add(botRightRoom);
                 Debug.Log($"Create BOT_RIGHT corner at i{x} j{y}");
             }
             //Plus shape
-            else 
+            else if(HasRoomAtCoord((left,y),(x,y))
+                    && HasRoomAtCoord((right,y),(x,y))
+                    && HasRoomAtCoord((x,top),(x,y))
+                    && HasRoomAtCoord((x,bot),(x,y)))
             {
                 var plusRoom = Instantiate(m_plusRoom, GetPosFromCoord(x, y), Quaternion.identity);
                 GeneratedRooms.Add(plusRoom);
                 Debug.Log($"Create PLUS at i{x} j{y}");
             }
+            //Ending room
+            else
+            {
+                var endRoom = Instantiate(EndRoomUp, GetPosFromCoord(x, y), Quaternion.identity);
+                GeneratedRooms.Add(endRoom);
+                Debug.Log($"Create Ending at i{x} j{y}");
+            }
         }
     }
 
-    private bool HasRoomAtCoord((int x ,int y) coord)
+    private bool IsStartRoom((int x, int y) coord)
+    {
+        return (coord ==(2,0));
+    }
+    private bool HasRoomAtCoord((int x ,int y) coord, (int x,int y) current)
     {
         if (coord.x < 0 || coord.x >= 5) return false;
         if (coord.y < 0 || coord.y >= 5) return false;
@@ -356,13 +393,18 @@ public class RoomGenerator : MonoBehaviour
         {
             if (m_roomCoordList[i] == coord)
             {
+                if (coord == (2, 0)
+                    && current != (2, 1))
+                {
+                    return false;
+                }
                 return true;
             }
         }
 
         return false;
     }
-    
+
     
     private Vector2 GetPosFromCoord(int x, int y)
     {
