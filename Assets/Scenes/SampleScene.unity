@@ -931,11 +931,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RoomSize: 23
-  MaxWidth: 8
-  MaxHeight: 8
-  StartingX: 2
-  StartingY: 2
-  MaxRoomForMainRoute: 8
+  MaxWidth: 9
+  MaxHeight: 9
+  StartingX: 4
+  StartingY: 4
+  MaxRoomForMainRoute: 7
   StartingRoomPrefab: {fileID: 5647216337340143316, guid: 3454d95508e8e64479de5a64bb7d6b48, type: 3}
   TopLeftCornerPrefab: {fileID: 6036747226783094826, guid: 542b1759327069d408861a66653ad0dd, type: 3}
   TopRightCornerPrefab: {fileID: 4396264610283047968, guid: 97895e22f47fe7b4193edb4a414b34fe, type: 3}
@@ -946,6 +946,13 @@ MonoBehaviour:
   T_LeftRoomPrefab: {fileID: 8799695859131363707, guid: 63964a02bcba94446a8b4e0d8b698827, type: 3}
   T_RightRoomPrefab: {fileID: 7244987704790378354, guid: 4f4f01f48878ff24ea5d7a3b828d06a2, type: 3}
   CrossShapeRoomPrefab: {fileID: 3171640726386024093, guid: 179f99b62f571034f86a230b31fde8e1, type: 3}
+  HorizontalStraightRoomPrefab: {fileID: 1724946048236266871, guid: fd1c52d68b610d84684d8cb2695b9db1, type: 3}
+  VerticalStraightRoomPrefab: {fileID: 3108404007749112928, guid: 81950a8466790c840a698136c8558a22, type: 3}
+  EndingUpRoomPrefab: {fileID: 1012518073653826067, guid: d6d0738d41234974e9f23037ba6989de, type: 3}
+  EndingDownRoomPrefab: {fileID: 1012518073653826067, guid: d63d777e76e18a741a71e71b309d823a, type: 3}
+  EndingLeftRoomPrefab: {fileID: 1012518073653826067, guid: c91ccced3735d2b41b06c24d7b6aa102, type: 3}
+  EndingRightRoomPrefab: {fileID: 1012518073653826067, guid: 50fb4bbd98015a844b087dbdb5c558ee, type: 3}
+  GeneratedRooms: []
 --- !u!4 &1883211613
 Transform:
   m_ObjectHideFlags: 0

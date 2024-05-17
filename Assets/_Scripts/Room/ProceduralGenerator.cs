@@ -42,6 +42,14 @@ public class ProceduralGenerator : MonoBehaviour
     public Room T_LeftRoomPrefab;
     public Room T_RightRoomPrefab;
     public Room CrossShapeRoomPrefab;
+    [Header("Straight Room")] 
+    public Room HorizontalStraightRoomPrefab;
+    public Room VerticalStraightRoomPrefab;
+    [Header("Ending Room")] 
+    public Room EndingUpRoomPrefab;
+    public Room EndingDownRoomPrefab;
+    public Room EndingLeftRoomPrefab;
+    public Room EndingRightRoomPrefab;
     
     //Step 1: Generate whole dungeon with raw data
         //Step 1.a: Generate main route from starting room to ending room
@@ -52,11 +60,13 @@ public class ProceduralGenerator : MonoBehaviour
 
     public int[,] CoordArr;
     public List<(int x, int y)> OccupiedCellList;
+    public List<Room> GeneratedRooms;
 
     private void Start()
     {
         CoordArr = new int[MaxWidth, MaxHeight];
         OccupiedCellList = new List<(int x, int y)>();
+        GeneratedRooms = new List<Room>();
         ResetCoordinateArray();
     }
 
@@ -101,7 +111,8 @@ public class ProceduralGenerator : MonoBehaviour
                 //Left
                 case 0:
                     coord = (curX - 1, curY);
-                    if (IsValidAndEmptyCoord(coord))
+                    numberNeighbor = GetNumberOfNeighbor(coord);
+                    if (IsValidAndEmptyCoord(coord) && numberNeighbor < 2)
                     {
                         curX -= 1;
                         CoordArr[curX, curY] = 1;
@@ -113,7 +124,8 @@ public class ProceduralGenerator : MonoBehaviour
                 //Right
                 case 1:
                     coord = (curX + 1, curY);
-                    if (IsValidAndEmptyCoord(coord))
+                    numberNeighbor = GetNumberOfNeighbor(coord);
+                    if (IsValidAndEmptyCoord(coord) && numberNeighbor < 2)
                     {
                         curX += 1;
                         CoordArr[curX, curY] = 1;
@@ -125,7 +137,8 @@ public class ProceduralGenerator : MonoBehaviour
                 //Up
                 case 2:
                     coord = (curX , curY + 1);
-                    if (IsValidAndEmptyCoord(coord))
+                    numberNeighbor = GetNumberOfNeighbor(coord);
+                    if (IsValidAndEmptyCoord(coord) && numberNeighbor < 2)
                     {
                         curY += 1;
                         CoordArr[curX, curY] = 1;
@@ -137,7 +150,8 @@ public class ProceduralGenerator : MonoBehaviour
                 //Down
                 case 3:
                     coord = (curX, curY - 1);
-                    if (IsValidAndEmptyCoord(coord))
+                    numberNeighbor = GetNumberOfNeighbor(coord);
+                    if (IsValidAndEmptyCoord(coord) && numberNeighbor < 2)
                     {
                         curY -= 1;
                         CoordArr[curX, curY] = 1;
@@ -148,9 +162,7 @@ public class ProceduralGenerator : MonoBehaviour
                     break;
             }
         }
-
-
-
+        
         StartCoroutine(CreateRoomData());
     }
 
@@ -239,15 +251,23 @@ public class ProceduralGenerator : MonoBehaviour
     /// </summary>
     private IEnumerator CreateRoomData()
     {
+        for (int i = 0; i < GeneratedRooms.Count; i++)
+        {
+            Destroy(GeneratedRooms[i].gameObject);
+        }
+        GeneratedRooms.Clear();
+        
         //Create starting room
-        Instantiate(StartingRoomPrefab, GetWorldPosFromCoord(OccupiedCellList[0]), Quaternion.identity);
+        var staringRoom = Instantiate(StartingRoomPrefab, GetWorldPosFromCoord(OccupiedCellList[0]), Quaternion.identity);
+        GeneratedRooms.Add(staringRoom);
         
         for (int i = 1; i < OccupiedCellList.Count; i++)
         {
             var numberNeighbor = GetNumberOfNeighbor(OccupiedCellList[i]);
             var roomPrefab = ChoosePrefab(numberNeighbor, OccupiedCellList[i]);
-            Instantiate(roomPrefab, GetWorldPosFromCoord(OccupiedCellList[i]), Quaternion.identity);
-            yield return new WaitForSeconds(1);
+            var room = Instantiate(roomPrefab, GetWorldPosFromCoord(OccupiedCellList[i]), Quaternion.identity);
+            GeneratedRooms.Add(room);
+            yield return new WaitForSeconds(0.5f);
         }
     }
 
@@ -257,7 +277,7 @@ public class ProceduralGenerator : MonoBehaviour
         switch (numberNeighbor)
         {
             case 1:
-                return StartingRoomPrefab; //Temp need proper prefab
+                return ChooseEndingRoom(coord);
             case 2:
                 return ChooseCornerRoom(coord);
             case 3:
@@ -265,6 +285,34 @@ public class ProceduralGenerator : MonoBehaviour
             case 4:
                 return CrossShapeRoomPrefab;
         }
+        return null;
+    }
+
+    private Room ChooseEndingRoom((int x, int y) coord)
+    {
+        var left = (coord.x - 1, coord.y);
+        var right = (coord.x +1, coord.y);
+        var up = (coord.x, coord.y + 1);
+        var down = (coord.x, coord.y - 1);
+
+        if (IsOccupied(left))
+        {
+            return EndingLeftRoomPrefab;
+        }
+        if (IsOccupied(right))
+        {
+            return EndingRightRoomPrefab;
+        }
+        if (IsOccupied(up))
+        {
+            return EndingUpRoomPrefab;
+        }
+        if (IsOccupied(down))
+        {
+            return EndingDownRoomPrefab;
+        }
+            
+        
         return null;
     }
 
@@ -292,7 +340,16 @@ public class ProceduralGenerator : MonoBehaviour
         {
             return BotRightCornerPrefab;
         }
+        if (IsOccupied(left) && IsOccupied(right))
+        {
+            return HorizontalStraightRoomPrefab;
+        }
+        if (IsOccupied(up) && IsOccupied(down))
+        {
+            return VerticalStraightRoomPrefab;
+        }
         
+        Debug.Log("NULL Corner");
         return null;
     }
 
@@ -320,6 +377,7 @@ public class ProceduralGenerator : MonoBehaviour
             return T_RightRoomPrefab;
         }
         
+        Debug.Log("NULL T");
         return null;
     }
     
