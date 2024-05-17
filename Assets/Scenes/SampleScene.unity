@@ -761,78 +761,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 808753421189757058, guid: 89055f891198ab245b86ba0259ad3396, type: 3}
   m_PrefabInstance: {fileID: 1849517387418347056}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1309817857
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1309817858}
-  - component: {fileID: 1309817859}
-  m_Layer: 0
-  m_Name: RoomGenerator
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1309817858
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1309817857}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1309817859
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1309817857}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38cfab90cd00bfe4fa01ae04bd04dafc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  StartRoom: {fileID: 5647216337340143316, guid: 3454d95508e8e64479de5a64bb7d6b48, type: 3}
-  EndRoomUp: {fileID: 1012518073653826067, guid: d63d777e76e18a741a71e71b309d823a, type: 3}
-  EndRoomDown: {fileID: 1012518073653826067, guid: d6d0738d41234974e9f23037ba6989de, type: 3}
-  EndRoomLeft: {fileID: 1012518073653826067, guid: 50fb4bbd98015a844b087dbdb5c558ee, type: 3}
-  EndRoomRight: {fileID: 1012518073653826067, guid: c91ccced3735d2b41b06c24d7b6aa102, type: 3}
-  m_topLeftCornerRoom: {fileID: 6036747226783094826, guid: 542b1759327069d408861a66653ad0dd, type: 3}
-  m_topRightCornerRoom: {fileID: 4396264610283047968, guid: 97895e22f47fe7b4193edb4a414b34fe, type: 3}
-  m_botLeftCornerRoom: {fileID: 7446199355952713645, guid: 0cc3fab3538695d45bbd9cdbaf3fcb81, type: 3}
-  m_botRightCornerRoom: {fileID: 6117828990758437836, guid: dcfb1769aac922b498f2b13161bedb9d, type: 3}
-  m_topBotRoom: {fileID: 3108404007749112928, guid: 81950a8466790c840a698136c8558a22, type: 3}
-  m_leftRightRoom: {fileID: 1724946048236266871, guid: fd1c52d68b610d84684d8cb2695b9db1, type: 3}
-  m_plusRoom: {fileID: 3171640726386024093, guid: 179f99b62f571034f86a230b31fde8e1, type: 3}
-  m_T_Up_Room: {fileID: 8160309011505394320, guid: 20f590d1c22fd9741ab4c711ef0ad6c7, type: 3}
-  m_T_Down_Room: {fileID: 4558380825510339380, guid: b7b5c0e88eebcef4cba3b27035ae8a55, type: 3}
-  m_T_Left_Room: {fileID: 8799695859131363707, guid: 63964a02bcba94446a8b4e0d8b698827, type: 3}
-  m_T_Right_Room: {fileID: 7244987704790378354, guid: 4f4f01f48878ff24ea5d7a3b828d06a2, type: 3}
-  RoomList:
-  - {fileID: 4396264610283047968, guid: 97895e22f47fe7b4193edb4a414b34fe, type: 3}
-  - {fileID: 6117828990758437836, guid: dcfb1769aac922b498f2b13161bedb9d, type: 3}
-  - {fileID: 7446199355952713645, guid: 0cc3fab3538695d45bbd9cdbaf3fcb81, type: 3}
-  - {fileID: 6036747226783094826, guid: 542b1759327069d408861a66653ad0dd, type: 3}
-  - {fileID: 3171640726386024093, guid: 179f99b62f571034f86a230b31fde8e1, type: 3}
-  IsGenerating: 0
-  OffsetRoomPos: 5
-  MaxNormalRoom: 5
-  CurrentNormalCounter: 3
-  GeneratedRooms: []
-  GenerateRoomType: 
 --- !u!1 &1316764464
 GameObject:
   m_ObjectHideFlags: 0
@@ -936,7 +864,10 @@ MonoBehaviour:
   StartingX: 4
   StartingY: 4
   MaxRoomForMainRoute: 7
-  StartingRoomPrefab: {fileID: 5647216337340143316, guid: 3454d95508e8e64479de5a64bb7d6b48, type: 3}
+  StartLeftRoomPrefab: {fileID: 5647216337340143316, guid: 4016ac7f0dc67bf4e8b5358f49c63d61, type: 3}
+  StartRightRoomPrefab: {fileID: 5647216337340143316, guid: d76b28632df48b140ae60b286415b19d, type: 3}
+  StartUpRoomPrefab: {fileID: 5647216337340143316, guid: 3454d95508e8e64479de5a64bb7d6b48, type: 3}
+  StartDownRoomPrefab: {fileID: 5647216337340143316, guid: 045514acf15e5e14cb304ee20727ec22, type: 3}
   TopLeftCornerPrefab: {fileID: 6036747226783094826, guid: 542b1759327069d408861a66653ad0dd, type: 3}
   TopRightCornerPrefab: {fileID: 4396264610283047968, guid: 97895e22f47fe7b4193edb4a414b34fe, type: 3}
   BotLeftCornerPrefab: {fileID: 7446199355952713645, guid: 0cc3fab3538695d45bbd9cdbaf3fcb81, type: 3}
@@ -950,8 +881,8 @@ MonoBehaviour:
   VerticalStraightRoomPrefab: {fileID: 3108404007749112928, guid: 81950a8466790c840a698136c8558a22, type: 3}
   EndingUpRoomPrefab: {fileID: 1012518073653826067, guid: d6d0738d41234974e9f23037ba6989de, type: 3}
   EndingDownRoomPrefab: {fileID: 1012518073653826067, guid: d63d777e76e18a741a71e71b309d823a, type: 3}
-  EndingLeftRoomPrefab: {fileID: 1012518073653826067, guid: c91ccced3735d2b41b06c24d7b6aa102, type: 3}
-  EndingRightRoomPrefab: {fileID: 1012518073653826067, guid: 50fb4bbd98015a844b087dbdb5c558ee, type: 3}
+  EndingLeftRoomPrefab: {fileID: 1012518073653826067, guid: 50fb4bbd98015a844b087dbdb5c558ee, type: 3}
+  EndingRightRoomPrefab: {fileID: 1012518073653826067, guid: c91ccced3735d2b41b06c24d7b6aa102, type: 3}
   GeneratedRooms: []
 --- !u!4 &1883211613
 Transform:
@@ -1093,5 +1024,4 @@ SceneRoots:
   - {fileID: 1316764467}
   - {fileID: 4861198015865590264}
   - {fileID: 1041088911}
-  - {fileID: 1309817858}
   - {fileID: 1883211613}

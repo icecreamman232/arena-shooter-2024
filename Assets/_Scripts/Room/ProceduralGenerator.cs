@@ -30,7 +30,10 @@ public class ProceduralGenerator : MonoBehaviour
     public int StartingY;
     public int MaxRoomForMainRoute;
     [Header("Start Rooms")] 
-    public Room StartingRoomPrefab;
+    public Room StartLeftRoomPrefab;
+    public Room StartRightRoomPrefab;
+    public Room StartUpRoomPrefab;
+    public Room StartDownRoomPrefab;
     [Header("Corner Room")] 
     public Room TopLeftCornerPrefab;
     public Room TopRightCornerPrefab;
@@ -258,7 +261,8 @@ public class ProceduralGenerator : MonoBehaviour
         GeneratedRooms.Clear();
         
         //Create starting room
-        var staringRoom = Instantiate(StartingRoomPrefab, GetWorldPosFromCoord(OccupiedCellList[0]), Quaternion.identity);
+        var startPrefab = ChooseStartRoom(OccupiedCellList[0]);
+        var staringRoom = Instantiate(startPrefab, GetWorldPosFromCoord(OccupiedCellList[0]), Quaternion.identity);
         GeneratedRooms.Add(staringRoom);
         
         for (int i = 1; i < OccupiedCellList.Count; i++)
@@ -270,7 +274,6 @@ public class ProceduralGenerator : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
     }
-
 
     private Room ChoosePrefab(int numberNeighbor, (int x, int y)coord)
     {
@@ -285,6 +288,34 @@ public class ProceduralGenerator : MonoBehaviour
             case 4:
                 return CrossShapeRoomPrefab;
         }
+        return null;
+    }
+    
+    private Room ChooseStartRoom((int x, int y) coord)
+    {
+        var left = (coord.x - 1, coord.y);
+        var right = (coord.x +1, coord.y);
+        var up = (coord.x, coord.y + 1);
+        var down = (coord.x, coord.y - 1);
+        
+        if (IsOccupied(left))
+        {
+            return StartLeftRoomPrefab;
+        }
+        if (IsOccupied(right))
+        {
+            return StartRightRoomPrefab;
+        }
+        if (IsOccupied(up))
+        {
+            return StartUpRoomPrefab;
+        }
+        if (IsOccupied(down))
+        {
+            return StartDownRoomPrefab;
+        }
+            
+        
         return null;
     }
 

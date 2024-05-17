@@ -6,13 +6,11 @@ namespace JustGame.Script.Level
 {
     public class Room : MonoBehaviour
     {
-        [SerializeField] private RoomType m_roomType;
         [SerializeField] private Vector2 m_roomSize;
         [SerializeField] private Vector2 m_roomOffset;
         [SerializeField] private SpriteMask m_mask;
         [SerializeField] private Door[] m_doorList;
-
-        public RoomType RoomType => m_roomType;
+        
         public Vector2 Size => m_roomSize;
 
         public Vector2 RoomPosition => (Vector2)transform.position + m_roomOffset;
