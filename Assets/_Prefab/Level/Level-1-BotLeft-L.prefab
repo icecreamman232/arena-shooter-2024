@@ -193,6 +193,14 @@ PrefabInstance:
       propertyPath: m_OnAllEnemyKilled.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 3968388721434621949, guid: d755e33eab8dd4d4ead148adae0ae105, type: 3}
+      propertyPath: m_Offset.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3968388721434621949, guid: d755e33eab8dd4d4ead148adae0ae105, type: 3}
+      propertyPath: m_Offset.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4137604855521960642, guid: d755e33eab8dd4d4ead148adae0ae105, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1
@@ -211,7 +219,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5301070760550517179, guid: d755e33eab8dd4d4ead148adae0ae105, type: 3}
       propertyPath: m_Name
-      value: Level-1-L-shape
+      value: Level-1-BotLeft-L
       objectReference: {fileID: 0}
     - target: {fileID: 5878609566874345867, guid: d755e33eab8dd4d4ead148adae0ae105, type: 3}
       propertyPath: m_LocalPosition.y

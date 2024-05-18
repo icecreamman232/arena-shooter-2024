@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using JustGame.Script.Level;
+using JustGame.Script.Manager;
 using JustGame.Scripts.Managers;
 using UnityEngine;
 
@@ -64,6 +66,8 @@ public class ProceduralGenerator : MonoBehaviour
     public int[,] CoordArr;
     public List<(int x, int y)> OccupiedCellList;
     public List<Room> GeneratedRooms;
+
+    private bool m_isCreatingRoom;
 
     private void Start()
     {
@@ -165,8 +169,10 @@ public class ProceduralGenerator : MonoBehaviour
                     break;
             }
         }
-        
-        StartCoroutine(CreateRoomData());
+
+        CreateRoomData();
+
+        ConnectDoors();
     }
 
     private int GetNumberOfNeighbor((int x, int y) coord)
@@ -247,12 +253,11 @@ public class ProceduralGenerator : MonoBehaviour
         
         return count;
     }
-
     
     /// <summary>
     /// Based on raw data, we transfer it into room data
     /// </summary>
-    private IEnumerator CreateRoomData()
+    private void CreateRoomData()
     {
         for (int i = 0; i < GeneratedRooms.Count; i++)
         {
@@ -271,7 +276,6 @@ public class ProceduralGenerator : MonoBehaviour
             var roomPrefab = ChoosePrefab(numberNeighbor, OccupiedCellList[i]);
             var room = Instantiate(roomPrefab, GetWorldPosFromCoord(OccupiedCellList[i]), Quaternion.identity);
             GeneratedRooms.Add(room);
-            yield return new WaitForSeconds(0.5f);
         }
     }
 
@@ -416,7 +420,6 @@ public class ProceduralGenerator : MonoBehaviour
     {
         return new Vector3(coord.x * RoomSize, coord.y * RoomSize, 0);
     }
-
     
     private bool IsValidAndEmptyCoord((int x, int y)coord)
     {
@@ -442,6 +445,78 @@ public class ProceduralGenerator : MonoBehaviour
         if (coord.y < 0 || coord.y >= MaxHeight) return false;
         return true;
     }
+
+    private void ConnectDoors()
+    {
+        for (int i = 0; i < GeneratedRooms.Count; i++)
+        {
+            for (int j = 0; j < GeneratedRooms[i].DoorList.Length; j++)
+            {
+                var door = GeneratedRooms[i].DoorList[j];
+                var direction = Vector2.zero;
+                switch (door.DoorType)
+                {
+                    case DoorType.GO_UP:
+                        direction = Vector2.up;
+                        break;
+                    case DoorType.GO_DOWN:
+                        direction = Vector2.down;
+                        break;
+                    case DoorType.GO_LEFT:
+                        direction = Vector2.left;
+                        break;
+                    case DoorType.GO_RIGHT:
+                        direction = Vector2.right;
+                        break;
+                }
+                GeneratedRooms[i].SetBounds(false);
+
+                var hit = Physics2D.Raycast(door.transform.position, direction, 30, LayerManager.RoomBoundsMask);
+                if (hit.collider != null)
+                {
+                    var targetRoom = hit.transform.parent.GetComponent<Room>();
+                    for (int k = 0; k < targetRoom.DoorList.Length; k++)
+                    {
+                        if (IsValidDoor(door, targetRoom.DoorList[k]))
+                        {
+                            door.ConnectDoor = targetRoom.DoorList[k];
+                            targetRoom.DoorList[k].ConnectDoor = door;
+                        }
+                    }
+                }
+                else
+                {
+                    Debug.Log("NOT HIT");
+                }
+                GeneratedRooms[i].SetBounds(true);
+            }
+        }
+    }
+
+
+    private bool IsValidDoor(Door currentDoor, Door targetDoor)
+    {
+        if (currentDoor.DoorType == DoorType.GO_UP && targetDoor.DoorType == DoorType.GO_DOWN)
+        {
+            return true;
+        }
+        if (currentDoor.DoorType == DoorType.GO_DOWN && targetDoor.DoorType == DoorType.GO_UP)
+        {
+            return true;
+        }
+        if (currentDoor.DoorType == DoorType.GO_LEFT && targetDoor.DoorType == DoorType.GO_RIGHT)
+        {
+            return true;
+        }
+        if (currentDoor.DoorType == DoorType.GO_RIGHT && targetDoor.DoorType == DoorType.GO_LEFT)
+        {
+            return true;
+        }
+
+        return false;
+    }
+    
+    
 
     private void OnDrawGizmos()
     {
