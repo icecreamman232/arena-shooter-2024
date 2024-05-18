@@ -4,26 +4,24 @@ using UnityEngine;
 
 public class RoomManager : MonoBehaviour
 {
+    [SerializeField] private ProceduralGenerator m_proceduralGenerator;
     [SerializeField] private TeleportEvent m_teleportEvent;
     [SerializeField] private Transform m_player;
-    [SerializeField] private Room m_startRoom;
-    [SerializeField] private Room[] m_rooms;
     private bool m_isTeleporting;
     
     private void Start()
     {
-        for (int i = 0; i < m_rooms.Length; i++)
-        {
-            if(m_rooms[i] == null) continue;
-            m_rooms[i].Hide();
-        }
-
-        if (m_startRoom != null)
-        {
-            m_startRoom.Show();
-        }
-        
         m_teleportEvent.AddListener(OnReceiveTeleportEvent);
+        m_proceduralGenerator.Initialize();
+        m_proceduralGenerator.GenerateDungeon();
+        
+        m_proceduralGenerator.GeneratedRooms[0].Show();
+        m_player.position = m_proceduralGenerator.GeneratedRooms[0].transform.position;
+        
+        for (int i = 1; i < m_proceduralGenerator.GeneratedRooms.Count; i++)
+        {
+            m_proceduralGenerator.GeneratedRooms[i].Hide();
+        }
     }
 
     private void OnDestroy()

@@ -47,7 +47,7 @@ namespace JustGame.Script.Level
         public List<(int x, int y)> OccupiedCellList;
         public List<Room> GeneratedRooms;
         
-        private void Start()
+        public void Initialize()
         {
             CoordArr = new int[MaxWidth, MaxHeight];
             OccupiedCellList = new List<(int x, int y)>();
@@ -67,7 +67,7 @@ namespace JustGame.Script.Level
         }
 
         [ContextMenu("Generate")]
-        private void GenerateDungeon()
+        public void GenerateDungeon()
         {
             CreateFloorPlan();
             

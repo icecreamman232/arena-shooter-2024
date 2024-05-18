@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace JustGame.Script.Level
@@ -17,11 +18,23 @@ namespace JustGame.Script.Level
 
         public void SetBounds(bool isEnable) => m_roomBounds.enabled = isEnable;
 
-        private void Start()
+        private void Awake()
         {
             m_roomBounds.size = m_roomSize;
             m_roomBounds.offset = m_roomOffset;
+            UpdateMaskSize();
         }
+        
+        private void UpdateMaskSize()
+        {
+            Vector2 spriteSize = m_mask.sprite.bounds.size;
+            Vector2 scale = m_roomSize / spriteSize;
+
+            m_mask.enabled = true;
+            m_mask.transform.localScale = new Vector3(scale.x, scale.y, 1);
+            m_mask.transform.position += (Vector3)m_roomOffset;
+        }
+        
 
         public void Show()
         {
